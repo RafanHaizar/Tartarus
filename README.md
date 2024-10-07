@@ -29,7 +29,7 @@ The tools purpose is to allow the study of malware and enable people who are int
 
   1. Turn off realtime threat protection
   
-  2. Go to directory of Tartarus
+  2. Download the Zip and Unzip it.
   
   3. Run `pip install -r req.txt`
   
@@ -37,7 +37,7 @@ The tools purpose is to allow the study of malware and enable people who are int
 
 ## Linux
 
-  1. Go to directory of Tartarus
+  1. Run `git clone https://github.com/RafanHaizar/Tartarus.git`
   
   2. Run `pip install -r req.txt`
   
