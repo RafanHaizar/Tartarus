@@ -7,6 +7,8 @@ Tartarus
 
 Created by Rafan Haizar, also known as Mr. Nophoto, Tartarus is the largest malware repository out there. With over 1,800 active malware samples, it’s a treasure trove for researchers, analysts, and cybersecurity pros.
 
+![alt text](https://github.com/RafanHaizar/Tartarus/blob/main/insight1.png)
+
 ## Disclaimer
 The tools purpose is to allow the study of malware and enable people who are interested in malware analysis (or maybe even as a part of their job) to have access to live malware, analyse the ways they operate, and maybe even enable advanced and savvy  people to block specific malware within their own environment.We recommend running them in a VM
 
@@ -22,7 +24,17 @@ The tools purpose is to allow the study of malware and enable people who are int
   <li>Linux (any version)</li>
 </ol> 
 
+## Commands
+```
+Commands: 
+                [help]          Shows list of commands
+                [list all]      Shows list of all malwares
+                [search]        Searches within malwares
+                [load [malnum]] Loads malware
+                [get]           Gives loaded malware to user
+                [exit]          Exits program
 
+```
 
 ## Windows
 
