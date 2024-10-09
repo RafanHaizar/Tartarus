@@ -5,7 +5,7 @@ Tartarus
 [![License - MIT](https://img.shields.io/badge/License-MIT-blue)](https://raw.githubusercontent.com/RafanHaizar/AttendanceApp/main/LICENSE)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 
-Created by Rafan Haizar, also known as Mr. Nophoto, Tartarus is the largest malware repository out there. With over 1,800 active malware samples, it’s a treasure trove for researchers, analysts, and cybersecurity pros.
+Created by Rafan Haizar, also known as Mr. Nophoto, Tartarus is the largest malware repository in the world. With over 1,800 active malware and shells, it’s a treasure for researchers, analysts, and cybersecurity professionals.
 
 ![alt text](https://github.com/RafanHaizar/Tartarus/blob/main/insight1.png)
 
