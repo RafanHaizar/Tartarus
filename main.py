@@ -1782,58 +1782,53 @@ def printable(data):
 
     for row in data:
         table.add_row(row)
-    print(f"{bcolors.OKBLUE}{table}")
+    print(f"{bcolors.OKBLUE}{table}{bcolors.END}")
 
 def load(hello):
     for row in data:
-        if hello in row[0]:  
-            malwarename = row[1]
-            return malwarename  
-     
+        if hello in row[0]:
+            print(f"{bcolors.OKBLUE}Loaded Succsessfully")
+            return row[1]
+    return None
+
 def linearSearch(arr, target):
     newlist = []
+    target = target.lower().strip()
     for row in arr:
-        if target.lower() in row[1].lower() or target.lower() in row[2].lower() or target.lower() in row[3].lower():  
-            newlist.append(row)  
+        if any(target in field.lower().strip() for field in row):
+            newlist.append(row)
+            print(f"{bcolors.OKBLUE}Loaded Succsessfully")
     return newlist
 
-
-
 def copy_files(malwarename):
-    destination = "."
+    destination = "newmalwaresdir"
     permissions = "777"
     try:
         password = input("Enter your sudo password: ")
         print("Searching for files...")
-        find_command = f"sudo find / -name '{malwarename}'"
-        child = pexpect.spawn(find_command)
-        index = child.expect(["password for", pexpect.EOF, pexpect.TIMEOUT])
-        if index == 0:  
-            child.sendline(password)
-        child.expect(pexpect.EOF)
-        files = child.before.decode().strip().splitlines()
-        if not files:
-            print("No files found.")
+        if not os.path.exists(destination):
+            os.mkdir(destination)
+        found_files = []
+
+        for root, dirs, files in os.walk("/"):
+            for filename in files:
+                if malwarename in filename:
+                    full_path = os.path.join(root, filename)
+                    found_files.append(full_path)
+        
+        if not found_files:
+            print("FATAL ERROR")
             return
-        for file in files:
-            if os.path.exists(file):
-                dest_file = os.path.join(destination, os.path.basename(file))
-                print(f"Copying: {file} -> {dest_file}...")
-                copy_command = f"sudo cp '{file}' '{dest_file}' -r"
-                child = pexpect.spawn(copy_command)
-                index = child.expect(["password for", pexpect.EOF, pexpect.TIMEOUT])
-                if index == 0:  
-                    child.sendline(password)
-                child.expect(pexpect.EOF)
-                print(f"Successfully copied to {dest_file}.")
-                chmod_command = f"sudo chmod {permissions} '{dest_file}'"
-                child = pexpect.spawn(chmod_command)
-                index = child.expect(["password for", pexpect.EOF, pexpect.TIMEOUT])
-                if index == 0:  
-                    child.sendline(password)
-                child.expect(pexpect.EOF)
-                print(f"Changed permissions of {dest_file} to {permissions}.")
-        print("\033[94mCopied Successfully\033[0m")
+        
+        for file in found_files:
+            dest_file = os.path.join(destination, os.path.basename(file))
+            try:
+                shutil.copy2(file, dest_file)
+                os.chmod(dest_file, int(permissions, 8))
+            except Exception as e:
+                print(f"An error occurred: {e}")
+        print(f"{bcolors.OKBLUE}Copied Successfully")
+    
     except Exception as e:
         print(f"An error occurred: {e}")
 
@@ -1845,26 +1840,28 @@ def inputfor():
         if exityes.lower() == "list all":
             printable(data)
         elif exityes.lower() == "help":
-            print(f"{bcolors.OKCYAN}{commandslist}")
+            print(f"{bcolors.OKCYAN}Available commands: 'list all', 'search <term>', 'load <term>', 'get', 'exit'{bcolors.END}")
         elif "search" in exityes.lower():
             exityes = exityes.replace("search ", "")
             results = linearSearch(data, exityes)
             if results:
                 printable(results)
             else:
-                print(f"{bcolors.WARNING}No results found for '{exityes}'.")
+                print(f"{bcolors.WARNING}No results found for '{exityes}'.{bcolors.END}")
         elif "load" in exityes.lower():
             exityes = exityes.replace("load ", "")
             yes = load(exityes)
             if yes:
-                malwarename = "(" + yes + ") "
+                malwarename = f"({yes}) "
                 continue
             else:
-                print(f"{bcolors.WARNING}No results found for '{exityes}'.")
+                print(f"{bcolors.WARNING}No results found for '{exityes}'.{bcolors.END}")
         elif exityes.lower() == "get":
-            malwarename = malwarename.replace("(", "").replace(") ", "")
-            copy_files(malwarename)
-       	    
+            if malwarename:
+                malwarename = malwarename.replace("(", "").replace(") ", "")
+                copy_files(malwarename)
+            else:
+                print(f"{bcolors.WARNING}No malware name loaded. Use 'load <name>' first.{bcolors.END}")
 
 	
     
