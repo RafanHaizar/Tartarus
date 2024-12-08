@@ -1782,7 +1782,7 @@ def printable(data):
 
     for row in data:
         table.add_row(row)
-    print(f"{bcolors.OKBLUE}{table}{bcolors.END}")
+    print(f"{bcolors.OKBLUE}{table}{bcolors.ENDC}")
 
 def load(hello):
     for row in data:
@@ -1840,14 +1840,14 @@ def inputfor():
         if exityes.lower() == "list all":
             printable(data)
         elif exityes.lower() == "help":
-            print(f"{bcolors.OKCYAN}Available commands: 'list all', 'search <term>', 'load <term>', 'get', 'exit'{bcolors.END}")
+            print(f"{bcolors.OKCYAN}Available commands: 'list all', 'search <term>', 'load <term>', 'get', 'exit'{bcolors.ENDC}")
         elif "search" in exityes.lower():
             exityes = exityes.replace("search ", "")
             results = linearSearch(data, exityes)
             if results:
                 printable(results)
             else:
-                print(f"{bcolors.WARNING}No results found for '{exityes}'.{bcolors.END}")
+                print(f"{bcolors.WARNING}No results found for '{exityes}'.{bcolors.ENDC}")
         elif "load" in exityes.lower():
             exityes = exityes.replace("load ", "")
             yes = load(exityes)
@@ -1855,13 +1855,13 @@ def inputfor():
                 malwarename = f"({yes}) "
                 continue
             else:
-                print(f"{bcolors.WARNING}No results found for '{exityes}'.{bcolors.END}")
+                print(f"{bcolors.WARNING}No results found for '{exityes}'.{bcolors.ENDC}")
         elif exityes.lower() == "get":
             if malwarename:
                 malwarename = malwarename.replace("(", "").replace(") ", "")
                 copy_files(malwarename)
             else:
-                print(f"{bcolors.WARNING}No malware name loaded. Use 'load <name>' first.{bcolors.END}")
+                print(f"{bcolors.WARNING}No malware name loaded. Use 'load <name>' first.{bcolors.ENDC}")
 
 	
     
